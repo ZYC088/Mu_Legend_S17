@@ -1563,7 +1563,9 @@ bool Player::CanCreateCharacter(uint8 race)
 			(race == DB_CLASS_GROW_LANCER && this->GetAccountData()->IsSpecialCharacter(SPECIAL_CHARACTER_GROW_LANCER)) ||
 			(race == DB_CLASS_RUNE_WIZARD) ||
 			(race == DB_CLASS_SLAYER) ||
-			(race == DB_CLASS_GUN_CRUSHER);
+			(race == DB_CLASS_GUN_CRUSHER) ||
+			(race == DB_CLASS_KUNDUN_MEPHIS) ||
+			(race == DB_CLASS_LEMURIA);
 }
 
 void Player::CharacterCreate(uint8 * Packet)

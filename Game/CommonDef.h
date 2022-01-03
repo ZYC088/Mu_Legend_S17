@@ -902,6 +902,8 @@ enum
 		256 = RW
 		512 = SL
 		1024 = GC
+		2048 = KM
+		4096 = LW
 		*/
 
 enum MatchingClassFlag
@@ -917,6 +919,8 @@ enum MatchingClassFlag
 	MATCHING_RUNE_WIZARD		= 1 << 8,
 	MATCHING_SLAYER				= 1 << 9,
 	MATCHING_GUN_CRUSHER		= 1 << 10,
+	MATCHING_KUNDUN_MEPHIS		= 1 << 11,
+	MATCHING_LEMURIA			= 1 << 12,
 };
 
 enum ServerType
