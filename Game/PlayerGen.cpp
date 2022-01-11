@@ -108,84 +108,54 @@ void Player::GenJoinResult(uint8 result, uint8 family)
 
 void Player::GenDeleteRequest()
 {
-	if ( !Player::IsPlayerBasicState(this) )
-	{
-		return;
-	}
-
-	if ( !this->IsAuthorizationEnabled() )
-	{
-		this->SendNotice(CUSTOM_MESSAGE_ID_RED, "You are not authorized for this action.");
-		return;
-	}
-
-	if ( this->GetInterfaceState()->GetID() != InterfaceData::QuestSupportGiver || 
-		 !this->GetInterfaceState()->GetTarget() ||
-		 !this->GetInterfaceState()->GetTarget()->IsCreature() ||
-		 !this->GetInterfaceState()->GetTarget()->ToCreature()->IsNpc() )
-	{
-		sLog->outError(LOG_GENS, "GenDeleteRequest() [%s][%s] - Wrong Interface: %s", 
-			this->GetAccountData()->GetAccount(), this->GetName(), this->GetInterfaceState()->GetID().c_str());
-		return;
-	}
-
-	if ( !this->GetGen()->IsFamily() )
-	{
-		this->GenDeleteResult(1);
-		return;
-	}
-
-	Monster* mMonster = this->GetInterfaceState()->GetTarget()->ToCreature();
-	
-	if ( mMonster->GetGen()->GetFamily() != this->GetGen()->GetFamily() )
-	{
-		this->GenDeleteResult(3);
-		return;
-	}
-
-	if ( sGameServer->guild_join_gens.get() && this->GuildGet() )
-	{
-		this->GenDeleteResult(2);
-		return;
-	}
-
-	if ( !sGameServer->party_allow_dif_gens && this->GetPartyID() != PARTY_NULL )
-	{
-		this->GenDeleteResult(2);
-		return;
-	}
-
-	if ( sGameServer->guild_join_gens.get() && (this->IsUseGuildMatching() || this->IsUseGuildMatchingJoin()) )
-	{
-		this->GenDeleteResult(4);
-		return;
-	}
-
-	/*if ( !sGameServer->party_allow_dif_gens && (sPartyMatching->IsPartyMatchingJoin(this->GetGUID())) )
-	{
-		this->GenDeleteResult(4);
-		return;
-	}*/
-
-	this->QuestMURemoveGens();
-
-	this->GetGen()->Reset();
-	this->GetGen()->SetLevel(GEN_LEVEL_NONE);
-	this->GetGen()->SetLeftDate(time(nullptr));
-	this->m_gen_victim_map.clear();
-
-	this->GenDeleteResult(0);
-	this->GenSendInfo(false, true);
-
-	SQLTransaction trans = MuDatabase.BeginTransaction();
-
-	this->SaveDBGen(trans);
-	this->SaveDBGenKill(trans);
-	this->SaveDBQuestMU(trans);
-
-	MuDatabase.CommitTransaction(trans);
-
-	sLog->outInfo(LOG_GENS, "%s - Left Family", this->BuildLog().c_str());
+    if (!Player::IsPlayerBasicState(this)) { return; }
+    if (!this->IsAuthorizationEnabled())
+    {
+        this->SendNotice(CUSTOM_MESSAGE_ID_RED, "You are not authorized for this action.");
+        return;
+    }
+    if (this->GetGuildID()) {
+        return this->SendNotice(NOTICE_GLOBAL, "You must leave/disband your guild before quitting your gen.");
+    }
+    if (this->GetInterfaceState()->GetID() != InterfaceData::QuestSupportGiver ||
+        !this->GetInterfaceState()->GetTarget() ||
+        !this->GetInterfaceState()->GetTarget()->IsCreature() ||
+        !this->GetInterfaceState()->GetTarget()->ToCreature()->IsNpc()) {
+        sLog->outError(LOG_GENS, "GenDeleteRequest() [%s][%s] - Wrong Interface: %s", this->GetAccountData()->GetAccount(), this->GetName(), this->GetInterfaceState()->GetID().c_str());
+        return;
+    }
+    if (!this->GetGen()->IsFamily())
+    {
+        this->GenDeleteResult(1);
+        return;
+    }
+    if (sGameServer->guild_join_gens.get() && this->GuildGet())
+    {
+        this->GenDeleteResult(2);
+        return;
+    }
+    if (!sGameServer->party_allow_dif_gens && this->GetPartyID() != PARTY_NULL)
+    {
+        this->GenDeleteResult(2);
+        return;
+    }
+    if (sGameServer->guild_join_gens.get() && (this->IsUseGuildMatching() || this->IsUseGuildMatchingJoin()))
+    {
+        this->GenDeleteResult(4);
+        return;
+    }
+    this->QuestMURemoveGens();
+    this->GetGen()->Reset();
+    this->GetGen()->SetLevel(GEN_LEVEL_NONE);
+    this->GetGen()->SetLeftDate(time(nullptr));
+    this->m_gen_victim_map.clear();
+    this->GenDeleteResult(0);
+    this->GenSendInfo(false, true);
+    SQLTransaction trans = MuDatabase.BeginTransaction();
+    this->SaveDBGen(trans);
+    this->SaveDBGenKill(trans);
+    this->SaveDBQuestMU(trans);
+    MuDatabase.CommitTransaction(trans);
 }
 
 void Player::GenDeleteResult(uint8 result)
@@ -400,6 +370,7 @@ void Player::GenDecContribution(int32 value)
 }
 
 void Player::GenUpdateLevel()
+if (this->GetGen()->GetFamily() == 0) { return; }
 {
 	uint8 current_level = this->GetGen()->GetLevel();
 

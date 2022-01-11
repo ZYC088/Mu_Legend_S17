@@ -564,12 +564,11 @@ CREATE TABLE `character_majestic_stats`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `character_majestic_tree`;
 CREATE TABLE `character_majestic_tree`  (
-  `char_id` int UNSIGNED NOT NULL,
-  `type` tinyint UNSIGNED NULL DEFAULT NULL,
-  `section` tinyint UNSIGNED NULL DEFAULT NULL,
-  `id` smallint UNSIGNED NOT NULL,
-  `level` tinyint UNSIGNED NULL DEFAULT NULL,
-  PRIMARY KEY (`char_id`, `id`) USING BTREE
+  `char_id` int(0) UNSIGNED NOT NULL,
+  `type` tinyint(0) UNSIGNED NULL DEFAULT NULL,
+  `section` tinyint(0) UNSIGNED NULL DEFAULT NULL,
+  `id` smallint(0) UNSIGNED NOT NULL,
+  `level` tinyint(0) UNSIGNED NULL DEFAULT NULL
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -727,13 +726,16 @@ CREATE TABLE `character_score`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `character_skill`;
 CREATE TABLE `character_skill`  (
-  `char_id` int UNSIGNED NOT NULL,
-  `type` tinyint UNSIGNED NULL DEFAULT NULL,
-  `skill` smallint UNSIGNED NOT NULL,
-  `skill_level` tinyint UNSIGNED NULL DEFAULT NULL,
-  PRIMARY KEY (`char_id`, `skill`) USING BTREE
+  `char_id` int(0) UNSIGNED NOT NULL,
+  `type` tinyint(0) UNSIGNED NOT NULL,
+  `skill` smallint(0) UNSIGNED NOT NULL,
+  `skill_level` tinyint(0) UNSIGNED NULL DEFAULT NULL,
+  PRIMARY KEY (`char_id`, `type`, `skill`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
+SET FOREIGN_KEY_CHECKS = 1;
+
+ALTER TABLE character_skill DROP PRIMARY KEY, ADD PRIMARY KEY (char_id, type, skill) USING BTREE;
 -- ----------------------------
 -- Table structure for character_statistics
 -- ----------------------------
@@ -757,6 +759,9 @@ CREATE TABLE `character_warp_favorite_list`  (
   PRIMARY KEY (`char_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
+
+
+ALTER TABLE `character_warp_favorite_list` DROP PRIMARY KEY;
 -- ----------------------------
 -- Table structure for crywolf_data
 -- ----------------------------

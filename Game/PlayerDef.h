@@ -418,19 +418,18 @@ struct GameOption
 
 	void Reset()
 	{
-		this->SetOption(0);
-		this->SetChatWindow(0);
-		this->SetKeyQ(0);
-		this->SetKeyW(0);
-		this->SetKeyE(0);
-		this->SetKeyR(0);
-		this->SetQWERLevel(0);
-
-		this->ResetSkillKey(-1);
-		this->SetChangeSkin(1);
-		this->SetExtraFlag(0);
-		this->SetAdditionalOptions(0);
-		this->ResetButtonLink(0);
+    	this->SetOption(31);
+    	this->SetChatWindow(50);
+    	this->SetKeyQ(0);
+    	this->SetKeyW(0);
+    	this->SetKeyE(0);
+    	this->SetKeyR(0);
+    	this->SetQWERLevel(0);
+    	this->ResetSkillKey(-1);
+    	this->SetChangeSkin(1);
+    	this->SetExtraFlag(0);
+    	this->SetAdditionalOptions(778);
+    	this->ResetButtonLink(0);
 	}
 };
 
