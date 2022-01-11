@@ -1081,14 +1081,14 @@ enum
 	DB_CLASS_HEIST_GUN_CRUSHER		= 0xA7,
 
 	
-	DB_CLASS_KUNDUN_MEPHIS			= 0xB0,
+	DB_CLASS_WHITE_WIZARD			= 0xB0,
 	DB_CLASS_LIGHT_MASTER			= 0xB1,
 	DB_CLASS_SHINE_WIZARD			= 0xB3,
 	DB_CLASS_LUMINOUS_WIZARD		= 0xB7,
 
-	DB_CLASS_LEMURIA				= 0xC0,
-	DB_CLASS_WARMAGE				= 0xC1,
-	DB_CLASS_ARCHMAGE				= 0xC3,
+	DB_CLASS_LEMURIA_MAGE			= 0xC0,
+	DB_CLASS_WAR_MAGE				= 0xC1,
+	DB_CLASS_ARCH_MAGE				= 0xC3,
 	DB_CLASS_MYSTIC_MAGE			= 0xC7,
 
 	
@@ -1109,8 +1109,8 @@ namespace Character
 		RUNE_WIZARD,
 		SLAYER,
 		GUN_CRUSHER,
-		KUNDUN_MEPHIS,
-		LEMURIA,
+		WHITE_WIZARD,
+		LEMURIA_MAGE,
 		MAX_CLASS
 	};
 
@@ -1127,8 +1127,8 @@ namespace Character
 				 race == DB_CLASS_RUNE_WIZARD ||
 				 race == DB_CLASS_SLAYER ||
 				 race == DB_CLASS_GUN_CRUSHER ||
-				 race == DB_CLASS_KUNDUN_MEPHIS ||
-				 race == DB_CLASS_LEMURIA);
+				 race == DB_CLASS_WHITE_WIZARD ||
+				 race == DB_CLASS_LEMURIA_MAGE);
 	}
 
 	inline bool AllowedDB(uint8 const race)
@@ -1144,8 +1144,8 @@ namespace Character
 				 race == DB_CLASS_RUNE_WIZARD 		|| race == DB_CLASS_RUNE_SPELL_MASTER 	|| race == DB_CLASS_GRAND_RUNE_MASTER 	|| race == DB_CLASS_MAJESTIC_RUNE_WIZARD 	||
 				 race == DB_CLASS_SLAYER 			|| race == DB_CLASS_ROYAL_SLAYER 		|| race == DB_CLASS_MASTER_SLAYER 		|| race == DB_CLASS_SLAUGHTERER 			||
 				 race == DB_CLASS_GUN_CRUSHER 		|| race == DB_CLASS_GUN_BRAKER 			|| race == DB_CLASS_MASTER_GUN_BREAKER 	|| race == DB_CLASS_HEIST_GUN_CRUSHER 		||
-				 race == DB_CLASS_KUNDUN_MEPHIS		|| race == DB_CLASS_LIGHT_MASTER		|| race == DB_CLASS_SHINE_WIZARD		|| race == DB_CLASS_LUMINOUS_WIZARD			||
-				 race == DB_CLASS_LEMURIA			|| race == DB_CLASS_WARMAGE				|| race == DB_CLASS_ARCHMAGE			|| race == DB_CLASS_MYSTIC_MAGE);
+				 race == DB_CLASS_WHITE_WIZARD		|| race == DB_CLASS_LIGHT_MASTER		|| race == DB_CLASS_SHINE_WIZARD		|| race == DB_CLASS_LUMINOUS_WIZARD			||
+				 race == DB_CLASS_LEMURIA_MAGE		|| race == DB_CLASS_WAR_MAGE			|| race == DB_CLASS_ARCH_MAGE			|| race == DB_CLASS_MYSTIC_MAGE);
 	}
 }
 
@@ -1162,8 +1162,8 @@ static const char * CharacterToName[Character::MAX_CLASS] =
 	"Rune Wizard",
 	"Slayer",
 	"Gun Crusher",
-	"Kundun Mephis",
-	"Lemuria"
+	"White Wizard",
+	"Lemuria Mage"
 };
 
 static uint8 CharacterToDB[Character::MAX_CLASS] =
@@ -1179,8 +1179,8 @@ static uint8 CharacterToDB[Character::MAX_CLASS] =
 	DB_CLASS_RUNE_WIZARD,
 	DB_CLASS_SLAYER,
 	DB_CLASS_GUN_CRUSHER,
-	DB_CLASS_KUNDUN_MEPHIS,
-	DB_CLASS_LEMURIA,
+	DB_CLASS_WHITE_WIZARD,
+	DB_CLASS_LEMURIA_MAGE,
 };
 
 enum
